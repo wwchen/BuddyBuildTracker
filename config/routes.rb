@@ -1,4 +1,8 @@
 BuddyBuildTracker::Application.routes.draw do
+  resources :emails
+
+  root :to => 'emails#index'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

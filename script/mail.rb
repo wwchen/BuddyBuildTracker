@@ -1,4 +1,5 @@
-#!/usr/bin/env ruby
+#!/home/wchen/rails/BuddyBuildTracker/script/rails runner
+##!/usr/bin/env ruby
 
 # testing the gem 'ruby'
 # http://rubydoc.info/gems/mail/frames
@@ -17,10 +18,14 @@ Mail.defaults do
                             :enable_ssl => true }
 end
 
-mails = Mail.find :mailbox => 'INBOX/_BBTest', :what => :all, # :delete_after_find => true
+mails = Mail.find :mailbox => CONFIG['MAILBOX'], :what => :all  #, :delete_after_find => true
 
 mails.each do |mail|
-  mail.to
-  mail.from
-  mail.body
+  email = Email.find_or_create_by_date_and_subject(:date => mail.date, :subject => mail.subject) do |e|
+    e.from     = mail.from_addrs
+    e.to       = mail.to_addrs
+    e.cc       = mail.cc_addrs
+    e.raw_body = mail.body.to_s
+    e.status   = 'unparsed'
+  end
 end

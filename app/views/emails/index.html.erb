@@ -1,20 +1,24 @@
 <table>
   <tr>
+    <th>ID</th>
     <th>From</th>
     <th>To</th>
     <th>CC</th>
     <th>Date</th>
     <th>Subject</th>
+    <th>Body</th>
     <th>Raw Body</th>
   </tr>
 <% @emails.each do |email| %>
   <tr>
+    <td><%= email.id %></td>
     <td><%= email.from %></td>
     <td><%= email.to %></td>
     <td><%= email.cc %></td>
     <td><%= email.date %></td>
     <td><%= email.subject %></td>
-    <td><%= email.raw_body %></td>
+    <td><%= email.body %></td>
+    <td><%#= email.raw_body %></td>
   </tr>
 <% end %>
 

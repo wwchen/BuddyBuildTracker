@@ -1,5 +1,6 @@
-#!/home/wchen/rails/BuddyBuildTracker/script/rails runner
-##!/usr/bin/env ruby
+#!/usr/bin/env /Users/wchen/github/BuddyBuildTracker/script/rails runner
+## !/home/wchen/rails/BuddyBuildTracker/script/rails runner
+## !/usr/bin/env ruby
 
 # testing the gem 'ruby'
 # http://rubydoc.info/gems/mail/frames

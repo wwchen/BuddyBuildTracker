@@ -1,5 +1,5 @@
-#!/usr/bin/env /Users/wchen/github/BuddyBuildTracker/script/rails runner
-## !/home/wchen/rails/BuddyBuildTracker/script/rails runner
+#!/home/wchen/rails/BuddyBuildTracker/script/rails runner
+##!/usr/bin/env /Users/wchen/github/BuddyBuildTracker/script/rails runner
 ## !/usr/bin/env ruby
 
 # testing the gem 'ruby'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130315222611) do
+ActiveRecord::Schema.define(:version => 20130318014042) do
 
   create_table "emails", :force => true do |t|
     t.string   "from"
@@ -25,6 +25,14 @@ ActiveRecord::Schema.define(:version => 20130315222611) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "emails_users", :id => false, :force => true do |t|
+    t.integer "email_id"
+    t.integer "user_id"
+  end
+
+  add_index "emails_users", ["email_id", "user_id"], :name => "index_emails_users_on_email_id_and_user_id"
+  add_index "emails_users", ["user_id", "email_id"], :name => "index_emails_users_on_user_id_and_email_id"
 
   create_table "roles", :force => true do |t|
     t.string   "name"

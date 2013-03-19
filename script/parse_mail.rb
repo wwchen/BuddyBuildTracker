@@ -40,8 +40,8 @@ Email.where(:status => 'parse pending').each do |e|
     e.bug = Bug.find_or_create_by_tfs_id(:tfs_id => tfs_id) do |b|
       b.drop_folder = bb_unc
       b.status      = 'unknown'
-      b.requestor   = User.find :email => e.from.first
-      b.tester      = User.find :email => e.to.first
+      b.requestor   = User.find_by_email :email => e.from.first
+      b.tester      = User.find_by_email :email => e.to.first
 
       b.requestor   ||= User.find_or_create_by_name('unassigned')
       b.tester      ||= User.find_or_create_by_name('unassigned')

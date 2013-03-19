@@ -11,6 +11,10 @@ class Bug < ActiveRecord::Base
     self.tfs_id
   end
 
+  def link_to_tfs
+    "http://vstfbing:8080/tfs/Bing/AppEx/_workItems#_a=edit&id=#{self.tfs_id}"
+  end
+
   def requestor_role
     requestor.role != 'developer' && errors.add(:requestor, "not a developer")
   end

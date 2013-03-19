@@ -11,7 +11,7 @@
 <% @bugs.each do |bug| %>
   <tr>
     <td><%= bug.id %></td>
-    <td><%= bug.tfs_id %></td>
+    <td><%= link_to bug.tfs_id, bug.link_to_tfs %></td>
     <td><%= bug.status %></td>
     <td><%= bug.drop_folder %></td>
     <td><%= bug.requestor.name if bug.requestor %></td>
@@ -21,3 +21,5 @@
 <% end %>
 
 </table>
+
+<%= link_to "New bug", new_bug_path %>

@@ -1,9 +1,10 @@
-#!/usr/bin/env /Users/wchen/github/BuddyBuildTracker/script/rails runner
+#!/home/wchen/rails/BuddyBuildTracker/script/rails runner
+##!/usr/bin/env /Users/wchen/github/BuddyBuildTracker/script/rails runner
 
-Email.where(:status => 'parsed').each do |e|
+Email.where(:status => 'complete').each do |e|
   e.users = e.users.clear
   e.body = ''
-  e.status = 'unparsed'
+  e.status = 'parsed'
 
   e.save!
 end

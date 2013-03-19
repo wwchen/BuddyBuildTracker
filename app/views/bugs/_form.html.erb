@@ -1,0 +1,44 @@
+<%= form_for(@bug) do |f| %>
+  <% if @bug.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@bug.errors.count, "error") %> prohibited this bug from being saved:</h2>
+
+      <ul>
+      <% @bug.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :tfs_id %><br />
+    <%= f.text_field :tfs_id %>
+  </div>
+
+  <div class="field">
+    <%= f.label :drop_folder %><br />
+    <%= f.text_field :drop_folder %>
+  </div>
+
+  <div class="field">
+    <%= f.label :requestor_id %><br />
+    <%= f.collection_select :requestor_id, User.find_all_by_role('developer'), :id, :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :tester_id %><br />
+    <%= f.collection_select :tester_id, User.find_all_by_role('tester'), :id, :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :status %><br />
+    <%= select(:bug, :status, %w[unknown pending ready]) %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+

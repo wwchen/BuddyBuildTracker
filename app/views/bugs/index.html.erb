@@ -6,6 +6,7 @@
     <th>Drop folder</th>
     <th>Requestor</th>
     <th>Tester</th>
+    <th>Buttons</th>
   </tr>
 <% @bugs.each do |bug| %>
   <tr>
@@ -15,6 +16,7 @@
     <td><%= bug.drop_folder %></td>
     <td><%= bug.requestor.name if bug.requestor %></td>
     <td><%= bug.tester.name    if bug.tester %></td>
+    <td><%= link_to 'Show', bug %> <%= link_to 'Edit', edit_bug_path(bug) %></td>
   </tr>
 <% end %>
 

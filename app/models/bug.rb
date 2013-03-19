@@ -7,6 +7,10 @@ class Bug < ActiveRecord::Base
   validate :requestor_role, :unless => "requestor_id.nil?"
   validate :tester_role,    :unless => "tester_id.nil?"
 
+  def to_param
+    self.tfs_id
+  end
+
   def requestor_role
     requestor.role != 'developer' && errors.add(:requestor, "not a developer")
   end

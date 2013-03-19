@@ -1,0 +1,8 @@
+TFS ID:  <%= @bug.tfs_id %>  <br>
+Status:  <%= @bug.status %> <br>
+Requestor:  <%= @bug.requestor.name %> <br>
+Tester:  <%= @bug.tester.name %> <br>
+
+
+<%= link_to 'Edit', edit_bug_path(@bug) %> |
+<%= link_to 'Back', bugs_path %>

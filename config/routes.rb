@@ -1,9 +1,10 @@
 BuddyBuildTracker::Application.routes.draw do
   resources :emails
   resources :bugs
-  resources :users
+  resources :users, :constraints => { :id => /[^\/]*/ }
+  
 
-  root :to => 'emails#index'
+  root :to => 'bugs#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

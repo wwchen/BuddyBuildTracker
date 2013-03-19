@@ -1,0 +1,19 @@
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Role</th>
+    <th>Bug count</th>
+  </tr>
+<% @users.each do |user| %>
+  <tr>
+    <td><%= user.id %></td>
+    <td><%= user.name %></td>
+    <td><%= user.email %></td>
+    <td><%= user.role %></td>
+    <td><%= user.bugs.count %></td>
+  </tr>
+<% end %>
+
+</table>

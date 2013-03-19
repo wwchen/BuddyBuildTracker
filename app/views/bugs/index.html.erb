@@ -1,0 +1,21 @@
+<table>
+  <tr>
+    <th>ID</th>
+    <th>TFS ID</th>
+    <th>Status</th>
+    <th>Drop folder</th>
+    <th>Requestor</th>
+    <th>Tester</th>
+  </tr>
+<% @bugs.each do |bug| %>
+  <tr>
+    <td><%= bug.id %></td>
+    <td><%= bug.tfs_id %></td>
+    <td><%= bug.status %></td>
+    <td><%= bug.drop_folder %></td>
+    <td><%= bug.requestor.name if bug.requestor %></td>
+    <td><%= bug.tester.name    if bug.tester %></td>
+  </tr>
+<% end %>
+
+</table>

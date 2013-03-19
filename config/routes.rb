@@ -1,5 +1,7 @@
 BuddyBuildTracker::Application.routes.draw do
   resources :emails
+  resources :bugs
+  resources :users
 
   root :to => 'emails#index'
 

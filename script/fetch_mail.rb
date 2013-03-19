@@ -29,4 +29,5 @@ mails.each do |mail|
     e.raw_body = mail.body.to_s
     e.status   = 'unparsed'
   end
+  puts "Fetched mail #{mail.subject} on #{mail.date}"
 end

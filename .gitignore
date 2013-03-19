@@ -16,3 +16,4 @@
 
 *.swp
 /script/config.yml
+.DS_Store

@@ -24,4 +24,5 @@ Email.where(:status => 'unparsed').each do |e|
   e.status = 'parsed'
 
   e.save
+  "Parsed mail #{e.subject} on #{e.date}"
 end

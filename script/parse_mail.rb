@@ -31,16 +31,64 @@ Email.where(:status => 'unparsed').each do |e|
   puts "#{e.subject} on #{e.date} changed from unparsed to #{e.status}"
 end
 
-# looking at parsed emails, is there a bug id associated with it?
+# Determining the intention of this email.. the hardest part
 Email.where(:status => 'parsed').each do |e|
+  confidence = 0.5
+  # Case 1: A tester signing off on the buddy build
+  # Case 2: A developer requesting a buddy build test
+  # Case 3: Comments from either party
+
+  # normalize the subject string
+  normalized_subject = e.subject.gsub(/(RE|FW[D]): /i, '').strip
+
+  # find all related emails
+  #email_thread = Email.all.select {|ea| ea.subject =~ Regexp.new "/^((RE|FW[D]): )*#{normalized_subject}$", 'i' }
+  email_thread = Email.where "subject LIKE '%#{normalized_subject}'"
+
+  next
+  # TODO confidence is full of crap
+  #
+  # look for UNC and bug number
+  tfs_id = (e.subject+e.body).match /(\d{6})(\D|$)/
+  tfs_id = tfs_id[1].to_i unless tfs.id.nil?
+  bb_unc = e.body.match  /(\\\\[a-zA-Z0-9\\ -]*)/ # (\\[^:*?"<>|]*)
+
+  confidence *= tfs_id.between?(500000,700000) ? 2 : 0.5
+
+  # look at associated bugs on the thread.. are they the same number?
+  email_thread.each do |et|
+    if et.bug
+      confidence *= et.bug.tfs_id == tfs_id ? 2 : 0.5
+    end
+  end
+
+
+  sender = User.find_by_email(e.from.first)
+
+  # Case 1: A tester signing off on the buddy build (the easiest scenario)
+  # There should already be a thread that is going on, so we'll check for that
+  if  (not email_thread.length.zero?) and
+      sender.role == 'tester' and
+      e.body.match(/(sign(ing|ed|) off|look(s|ing|) good)/i)
+    puts "##{e.id} #{sender.alias} is signing off"
+  end
+
+  # Case 2: A developer requesting a buddy build test
+  if sender.role == 'developer' and
+    puts "##{e.id} #{sender.alias} is requesting buddy build"
+  end
+  
+
+  next
+  
   # ideas on bug id
   #  look for the query table
   #  bug [id :] <number>
 
   # associate this email with all parties involved
   associate_email_to_users(e, [e.from, e.to])
+  associate_email_to_bug(e, tfs_id)
  
-  next
   # If email is from a dev, try and find a TFS item number and UNC
   sender = User.find_by_email e.from.first
 
@@ -53,9 +101,6 @@ Email.where(:status => 'parsed').each do |e|
   # - it is the first email in the thread
   # - if it is not, it is the same bug number
 
-  # look for UNC and bug id
-  tfs_id = (e.subject+e.body).match /(\d{6})(\D|$)/
-  bb_unc = e.body.match  /(\\\\[a-zA-Z0-9\\ -]*)/ # (\\[^:*?"<>|]*)
 
   # I'm going to assume if there's a tfs id and UNC path, it's probably from a dev
   if tfs_id && bb_unc

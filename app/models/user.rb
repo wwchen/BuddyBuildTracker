@@ -1,6 +1,5 @@
 class User < ActiveRecord::Base
   has_and_belongs_to_many :emails
-  #has_and_belongs_to_many :roles
   has_many :tester_bugs,    :class_name => 'Bug', :foreign_key => 'tester_id'
   has_many :requestor_bugs, :class_name => 'Bug', :foreign_key => 'requestor_id'
 

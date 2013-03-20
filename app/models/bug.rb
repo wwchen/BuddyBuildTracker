@@ -1,6 +1,7 @@
 class Bug < ActiveRecord::Base
   belongs_to :requestor, :class_name => "User"
   belongs_to :tester,    :class_name => "User"
+  has_many :emails
 
   attr_accessible :tfs_id, :status, :drop_folder, :requestor, :tester
   validates :tfs_id,        :presence => true
